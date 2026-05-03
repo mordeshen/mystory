@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mordechai's Story</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,600;1,9..144,300;1,9..144,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --ink: #1a1612;
+    --paper: #f8f5f0;
+    --warm: #faf7f2;
+    --oxblood: #7a2e2e;
+    --oxblood-light: rgba(122, 46, 46, 0.08);
+    --muted: #8a7e72;
+    --rule: rgba(122, 46, 46, 0.15);
+  }
+
+  html { font-size: 18px; scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* -- grain overlay -- */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    z-index: 9999;
+  }
+
+  .page {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* -- header ornament -- */
+  .ornament {
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.2s forwards;
+  }
+
+  .ornament svg {
+    width: 48px;
+    height: 48px;
+    color: var(--oxblood);
+  }
+
+  /* -- headline -- */
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 2rem;
+    line-height: 1.25;
+    color: var(--oxblood);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    letter-spacing: -0.01em;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.4s forwards;
+  }
+
+  .subtitle {
+    text-align: center;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 3.5rem;
+    opacity: 0;
+    animation: fadeUp 1s ease 0.6s forwards;
+  }
+
+  /* -- body text -- */
+  .story p {
+    margin-bottom: 1.4rem;
+    font-size: 1rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards;
+  }
+
+  .story p:nth-child(1) { animation-delay: 0.8s; }
+  .story p:nth-child(2) { animation-delay: 0.95s; }
+  .story p:nth-child(3) { animation-delay: 1.1s; }
+  .story p:nth-child(4) { animation-delay: 1.25s; }
+  .story p:nth-child(5) { animation-delay: 1.4s; }
+  .story p:nth-child(6) { animation-delay: 1.55s; }
+  .story p:nth-child(7) { animation-delay: 1.7s; }
+
+  .story p.emphasis {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.1rem;
+    color: var(--oxblood);
+    line-height: 1.65;
+  }
+
+  .story strong {
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* -- divider -- */
+  .divider {
+    border: none;
+    height: 1px;
+    background: var(--rule);
+    margin: 2.5rem auto;
+    width: 80px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 1.8s forwards;
+  }
+
+  /* -- support section -- */
+  .support {
+    background: var(--warm);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 2rem 2rem 2.2rem;
+    margin-top: 0.5rem;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 2s forwards;
+  }
+
+  .support h2 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 1.2rem;
+    color: var(--oxblood);
+    margin-bottom: 1rem;
+  }
+
+  .support p {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+    line-height: 1.7;
+  }
+
+  .support p:last-of-type {
+    margin-bottom: 1.5rem;
+  }
+
+  .support a.cta {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--paper);
+    background: var(--oxblood);
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background 0.3s ease, transform 0.2s ease;
+  }
+
+  .support a.cta:hover {
+    background: #5e2222;
+    transform: translateY(-1px);
+  }
+
+  /* -- bio footer -- */
+  .bio {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--rule);
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+    font-style: italic;
+    opacity: 0;
+    animation: fadeUp 0.8s ease 2.2s forwards;
+  }
+
+  .bio a {
+    color: var(--oxblood);
+    text-decoration: none;
+    border-bottom: 1px solid var(--rule);
+    transition: border-color 0.3s;
+  }
+
+  .bio a:hover {
+    border-color: var(--oxblood);
+  }
+
+  /* -- animations -- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* -- responsive -- */
+  @media (max-width: 600px) {
+    html { font-size: 16px; }
+    .page { padding: 3rem 1.5rem 4rem; }
+    h1 { font-size: 1.7rem; }
+    .support { padding: 1.5rem; }
+  }
+
+  /* -- reduced motion -- */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-delay: 0.01ms !important;
+    }
+  }
+
+  /* -- print -- */
+  @media print {
+    body::before { display: none; }
+    .page { padding: 1rem; }
+    * { opacity: 1 !important; animation: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <div class="ornament">
+    <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round">
+      <!-- minimal violin/treble clef suggestion -->
+      <path d="M24 6 C24 6 20 14 20 22 C20 28 22 32 24 36 C26 32 28 28 28 22 C28 14 24 6 24 6Z"/>
+      <line x1="24" y1="6" x2="24" y2="42"/>
+      <circle cx="24" cy="42" r="3"/>
+    </svg>
+  </div>
+
+  <h1>The Violinist Who Went to War</h1>
+  <div class="subtitle">Mordechai's Story</div>
+
+  <div class="story">
+    <p>The night before I entered Gaza, I played violin for my unit. Thirty years of music had taught me how to carry people through moments too heavy for language.</p>
+
+    <p>Then the music stopped. And the war began.</p>
+
+    <p>I came home with injuries that changed the shape of my life. But surviving the battlefield was only half the fight — the other half was surviving the rehabilitation system. Endless forms, committees, appeals. Most wounded veterans don't have the strength for it. Many give up.</p>
+
+    <p>I'm an engineer. I build things. So I built <strong>Magen</strong> — an AI platform that guides wounded veterans through every step of their rehabilitation, in plain human language, fighting the bureaucracy alongside them. I built it from my truck — my home on wheels — the same truck I've traveled in for years, giving hundreds of lectures and violin performances across Israel and the world.</p>
+
+    <p class="emphasis">A combat veteran living in a truck. A violinist who writes software. A man of faith who builds AI. None of it was planned. All of it is real.</p>
+
+    <p>When you adopt a wounded soldier, you're telling someone: your sacrifice matters. You are not forgotten. As someone who has played violin for soldiers on the worst night of their lives — I know how much it means when someone simply shows up.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="support">
+    <h2>A note about Magen</h2>
+    <p>I'm grateful for your willingness to support me — it means more than I can say. But if I'm honest, there are soldiers out there who need it more than I do.</p>
+    <p>That's why I built Magen. Every conversation the AI has with a wounded veteran — every form it helps fill out, every appeal it drafts — costs money to run. Right now, that cost is what keeps Magen from reaching everyone who needs it.</p>
+    <p>So here's what I'd love: let's do this together. Help me keep Magen running — so it can reach the friends and brothers who are still fighting the system alone.</p>
+    <a class="cta" href="https://shikum.org" target="_blank" rel="noopener">Support Magen →</a>
+  </div>
+
+  <div class="bio">
+    Mordechai is a combat-wounded IDF veteran, violinist, full-stack engineer, and the creator of <a href="https://shikum.org" target="_blank" rel="noopener">Magen</a> — an AI platform helping injured Israeli soldiers navigate rehabilitation. He lives in a converted truck, travels the world sharing his story through music, and believes technology should serve the people who've given the most.
+  </div>
+
+</div>
+
+</body>
+</html>
